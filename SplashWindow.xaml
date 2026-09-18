@@ -22,8 +22,7 @@
             <Ellipse.Fill>
                 <RadialGradientBrush>
                     <GradientStop Color="#FFFFFF" Offset="0" />
-                    <GradientStop Color="#80DFFF" Offset="0.4" />
-                    <GradientStop Color="#0080FF" Offset="0.7" />
+                    <GradientStop Color="#80DFFF" Offset="0.3" />
                     <GradientStop Color="Transparent" Offset="1" />
                 </RadialGradientBrush>
             </Ellipse.Fill>
@@ -35,8 +34,8 @@
         <!-- 飞行动画粒子容器 -->
         <Canvas x:Name="FlyParticleCanvas" />
 
-        <!-- 晶体核心 -->
-        <Border x:Name="Crystal"
+        <!-- ============ VEYRA CORE - 最初版旋转正方形 ============ -->
+        <Border x:Name="CrystalCore"
                 Width="140" Height="140"
                 Canvas.Left="330" Canvas.Top="230"
                 Opacity="0"
@@ -49,10 +48,10 @@
             </Border.RenderTransform>
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                    <GradientStop x:Name="CrystalGrad1" Color="#E8F8FF" Offset="0" />
-                    <GradientStop x:Name="CrystalGrad2" Color="#4FC3F7" Offset="0.4" />
-                    <GradientStop x:Name="CrystalGrad3" Color="#7C4DFF" Offset="0.8" />
-                    <GradientStop x:Name="CrystalGrad4" Color="#1A237E" Offset="1" />
+                    <GradientStop Color="#E8F8FF" Offset="0" />
+                    <GradientStop Color="#4FC3F7" Offset="0.4" />
+                    <GradientStop Color="#7C4DFF" Offset="0.8" />
+                    <GradientStop Color="#1A237E" Offset="1" />
                 </LinearGradientBrush>
             </Border.Background>
             <Border.BorderBrush>
@@ -60,7 +59,7 @@
             </Border.BorderBrush>
             <Border.BorderThickness>2</Border.BorderThickness>
             <Border.Effect>
-                <BlurEffect x:Name="CrystalBlur" Radius="0" />
+                <BlurEffect x:Name="CrystalBlur" Radius="4" />
             </Border.Effect>
             <!-- 晶体内部光流 -->
             <Grid>
@@ -102,24 +101,21 @@
 
         <!-- 能量加载区域 -->
         <Grid x:Name="LoadingPanel"
-              Width="300" Height="80"
-              Canvas.Left="250" Canvas.Top="420"
+              Width="320" Height="90"
+              Canvas.Left="240" Canvas.Top="460"
               Opacity="0">
             <StackPanel>
-                <!-- 标题文字 -->
                 <TextBlock x:Name="LoadingTitle"
                            Text="VEYRA // VISION CORE"
                            Foreground="#80DFFF"
                            FontSize="11"
                            FontFamily="Consolas"
                            HorizontalAlignment="Center"
-                           Margin="0,0,0,10" />
-                <!-- 能量条背景 -->
-                <Border Width="280" Height="6"
+                           Margin="0,0,0,12" />
+                <Border Width="300" Height="6"
                         HorizontalAlignment="Center"
                         CornerRadius="3"
                         Background="#1A1A2E">
-                    <!-- 能量条填充 -->
                     <Border x:Name="EnergyBar"
                             Width="0" Height="6"
                             HorizontalAlignment="Left"
@@ -127,21 +123,32 @@
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                 <GradientStop Color="#4FC3F7" Offset="0" />
-                                <GradientStop Color="#7C4DFF" Offset="1" />
+                                <GradientStop Color="#7C4DFF" Offset="0.5" />
+                                <GradientStop Color="#B388FF" Offset="1" />
                             </LinearGradientBrush>
                         </Border.Background>
                     </Border>
                 </Border>
-                <!-- 4个系统状态点 -->
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Center"
-                            Margin="0,12,0,0">
-                    <Ellipse x:Name="Dot1" Width="8" Height="8" Fill="#333355" Margin="0,0,15,0" />
-                    <Ellipse x:Name="Dot2" Width="8" Height="8" Fill="#333355" Margin="0,0,15,0" />
-                    <Ellipse x:Name="Dot3" Width="8" Height="8" Fill="#333355" Margin="0,0,15,0" />
-                    <Ellipse x:Name="Dot4" Width="8" Height="8" Fill="#333355" />
+                            Margin="0,14,0,0">
+                    <Canvas Width="16" Height="16" Margin="0,0,18,0">
+                        <Ellipse x:Name="Dot1" Width="8" Height="8" Fill="#333355"
+                                 Canvas.Left="4" Canvas.Top="4" />
+                    </Canvas>
+                    <Canvas Width="16" Height="16" Margin="0,0,18,0">
+                        <Ellipse x:Name="Dot2" Width="8" Height="8" Fill="#333355"
+                                 Canvas.Left="4" Canvas.Top="4" />
+                    </Canvas>
+                    <Canvas Width="16" Height="16" Margin="0,0,18,0">
+                        <Ellipse x:Name="Dot3" Width="8" Height="8" Fill="#333355"
+                                 Canvas.Left="4" Canvas.Top="4" />
+                    </Canvas>
+                    <Canvas Width="16" Height="16">
+                        <Ellipse x:Name="Dot4" Width="8" Height="8" Fill="#333355"
+                                 Canvas.Left="4" Canvas.Top="4" />
+                    </Canvas>
                 </StackPanel>
-                <!-- 状态文字 -->
                 <TextBlock x:Name="StatusText"
                            Text=""
                            Foreground="#666688"
@@ -152,7 +159,38 @@
             </StackPanel>
         </Grid>
 
-        <!-- 重新播放提示 -->
+        <!-- 碎片容器 -->
+        <Canvas x:Name="FragmentCanvas" />
+
+        <!-- Reconstruction Seed -->
+        <Path x:Name="ReconSeed" Stretch="Fill" Width="0" Height="0"
+              Canvas.Left="400" Canvas.Top="300" Opacity="0">
+            <Path.Data>
+                <PathGeometry>
+                    <PathFigure IsClosed="True">
+                        <LineSegment Point="15,0" />
+                        <LineSegment Point="30,15" />
+                        <LineSegment Point="15,30" />
+                        <LineSegment Point="0,15" />
+                    </PathFigure>
+                </PathGeometry>
+            </Path.Data>
+            <Path.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#E8F8FF" Offset="0" />
+                    <GradientStop Color="#4FC3F7" Offset="0.5" />
+                    <GradientStop Color="#7C4DFF" Offset="1" />
+                </LinearGradientBrush>
+            </Path.Fill>
+            <Path.Stroke>
+                <SolidColorBrush Color="#A0DFFF" />
+            </Path.Stroke>
+            <Path.StrokeThickness>1.5</Path.StrokeThickness>
+            <Path.RenderTransform>
+                <ScaleTransform x:Name="SeedScale" CenterX="15" CenterY="15" />
+            </Path.RenderTransform>
+        </Path>
+
         <TextBlock x:Name="ReplayHint"
                    Text="Press R to replay | ESC to exit"
                    Foreground="#444466"
