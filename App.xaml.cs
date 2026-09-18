@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace 美术测试
+namespace ArtTest
 {
     public partial class App : Application
     {

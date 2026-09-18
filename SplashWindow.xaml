@@ -1,4 +1,4 @@
-<Window x:Class="美术测试.SplashWindow"
+<Window x:Class="ArtTest.SplashWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="VEYRA"
@@ -113,8 +113,7 @@
                            FontSize="11"
                            FontFamily="Consolas"
                            HorizontalAlignment="Center"
-                           Margin="0,0,0,10"
-                           LetterSpacing="2" />
+                           Margin="0,0,0,10" />
                 <!-- 能量条背景 -->
                 <Border Width="280" Height="6"
                         HorizontalAlignment="Center"
@@ -155,7 +154,7 @@
 
         <!-- 重新播放提示 -->
         <TextBlock x:Name="ReplayHint"
-                   Text="按 R 重新播放  |  按 ESC 退出"
+                   Text="Press R to replay | ESC to exit"
                    Foreground="#444466"
                    FontSize="10"
                    FontFamily="Consolas"
