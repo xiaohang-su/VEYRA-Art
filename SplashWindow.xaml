@@ -1,0 +1,166 @@
+<Window x:Class="美术测试.SplashWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="VEYRA"
+        Width="800" Height="600"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStartupLocation="CenterScreen"
+        Topmost="True">
+
+    <Canvas x:Name="MainCanvas" Background="Transparent">
+
+        <!-- 背景微弱粒子容器 -->
+        <Canvas x:Name="BgParticleCanvas" />
+
+        <!-- 中心光点 -->
+        <Ellipse x:Name="CoreLight"
+                 Width="0" Height="0"
+                 Canvas.Left="400" Canvas.Top="300"
+                 Opacity="0">
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFFFFF" Offset="0" />
+                    <GradientStop Color="#80DFFF" Offset="0.4" />
+                    <GradientStop Color="#0080FF" Offset="0.7" />
+                    <GradientStop Color="Transparent" Offset="1" />
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+            <Ellipse.RenderTransform>
+                <ScaleTransform x:Name="CoreLightScale" CenterX="0" CenterY="0" />
+            </Ellipse.RenderTransform>
+        </Ellipse>
+
+        <!-- 飞行动画粒子容器 -->
+        <Canvas x:Name="FlyParticleCanvas" />
+
+        <!-- 晶体核心 -->
+        <Border x:Name="Crystal"
+                Width="140" Height="140"
+                Canvas.Left="330" Canvas.Top="230"
+                Opacity="0"
+                CornerRadius="8">
+            <Border.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform x:Name="CrystalRotate" Angle="45" CenterX="70" CenterY="70" />
+                    <ScaleTransform x:Name="CrystalScale" CenterX="70" CenterY="70" ScaleX="0" ScaleY="0" />
+                </TransformGroup>
+            </Border.RenderTransform>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop x:Name="CrystalGrad1" Color="#E8F8FF" Offset="0" />
+                    <GradientStop x:Name="CrystalGrad2" Color="#4FC3F7" Offset="0.4" />
+                    <GradientStop x:Name="CrystalGrad3" Color="#7C4DFF" Offset="0.8" />
+                    <GradientStop x:Name="CrystalGrad4" Color="#1A237E" Offset="1" />
+                </LinearGradientBrush>
+            </Border.Background>
+            <Border.BorderBrush>
+                <SolidColorBrush Color="#80DFFF" />
+            </Border.BorderBrush>
+            <Border.BorderThickness>2</Border.BorderThickness>
+            <Border.Effect>
+                <BlurEffect x:Name="CrystalBlur" Radius="0" />
+            </Border.Effect>
+            <!-- 晶体内部光流 -->
+            <Grid>
+                <Rectangle x:Name="CrystalFlow1" Width="140" Height="3" Opacity="0.6"
+                           VerticalAlignment="Top" Margin="0,30,0,0">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="Transparent" Offset="0" />
+                            <GradientStop Color="#B388FF" Offset="0.5" />
+                            <GradientStop Color="Transparent" Offset="1" />
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <Rectangle x:Name="CrystalFlow2" Width="140" Height="2" Opacity="0.4"
+                           VerticalAlignment="Top" Margin="0,70,0,0">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="Transparent" Offset="0" />
+                            <GradientStop Color="#80DFFF" Offset="0.5" />
+                            <GradientStop Color="Transparent" Offset="1" />
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <!-- 中心高光 -->
+                <Ellipse Width="50" Height="50" Opacity="0.8"
+                         HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Ellipse.Fill>
+                        <RadialGradientBrush>
+                            <GradientStop Color="#FFFFFF" Offset="0" />
+                            <GradientStop Color="Transparent" Offset="1" />
+                        </RadialGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+            </Grid>
+        </Border>
+
+        <!-- 立方体容器 -->
+        <Canvas x:Name="CubeCanvas" />
+
+        <!-- 能量加载区域 -->
+        <Grid x:Name="LoadingPanel"
+              Width="300" Height="80"
+              Canvas.Left="250" Canvas.Top="420"
+              Opacity="0">
+            <StackPanel>
+                <!-- 标题文字 -->
+                <TextBlock x:Name="LoadingTitle"
+                           Text="VEYRA // VISION CORE"
+                           Foreground="#80DFFF"
+                           FontSize="11"
+                           FontFamily="Consolas"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,10"
+                           LetterSpacing="2" />
+                <!-- 能量条背景 -->
+                <Border Width="280" Height="6"
+                        HorizontalAlignment="Center"
+                        CornerRadius="3"
+                        Background="#1A1A2E">
+                    <!-- 能量条填充 -->
+                    <Border x:Name="EnergyBar"
+                            Width="0" Height="6"
+                            HorizontalAlignment="Left"
+                            CornerRadius="3">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#4FC3F7" Offset="0" />
+                                <GradientStop Color="#7C4DFF" Offset="1" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                </Border>
+                <!-- 4个系统状态点 -->
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            Margin="0,12,0,0">
+                    <Ellipse x:Name="Dot1" Width="8" Height="8" Fill="#333355" Margin="0,0,15,0" />
+                    <Ellipse x:Name="Dot2" Width="8" Height="8" Fill="#333355" Margin="0,0,15,0" />
+                    <Ellipse x:Name="Dot3" Width="8" Height="8" Fill="#333355" Margin="0,0,15,0" />
+                    <Ellipse x:Name="Dot4" Width="8" Height="8" Fill="#333355" />
+                </StackPanel>
+                <!-- 状态文字 -->
+                <TextBlock x:Name="StatusText"
+                           Text=""
+                           Foreground="#666688"
+                           FontSize="9"
+                           FontFamily="Consolas"
+                           HorizontalAlignment="Center"
+                           Margin="0,8,0,0" />
+            </StackPanel>
+        </Grid>
+
+        <!-- 重新播放提示 -->
+        <TextBlock x:Name="ReplayHint"
+                   Text="按 R 重新播放  |  按 ESC 退出"
+                   Foreground="#444466"
+                   FontSize="10"
+                   FontFamily="Consolas"
+                   Canvas.Left="10" Canvas.Top="570"
+                   Opacity="0.5" />
+
+    </Canvas>
+</Window>
